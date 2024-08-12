@@ -27,7 +27,14 @@ def register_extras():
     # Register the additional pretrained feature extractors
     from . import extractors
     for submodule in pkgutil.iter_modules(extractors.__path__):
+        original_module = sys.modules.get(submodule.name)
         module = submodule.module_finder.find_spec(submodule.name).loader.load_module(submodule.name)
+        # If an original module existed, restore it
+        if original_module:
+            sys.modules[submodule.name] = original_module
+        else:
+            # Otherwise, remove the new module from the primary namespace
+            del sys.modules[submodule.name]
         sys.modules[f'slideflow.model.extractors.{submodule.name}'] = module
 
     # Register BISCUIT

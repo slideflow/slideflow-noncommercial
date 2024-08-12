@@ -90,7 +90,9 @@ setuptools.setup(
     extras_require={
         'gigapath': [
             'timm>=1.0.3',
-            'fairscale'
+            'fairscale',
+            'flash_attn==2.5.8',
+            'einops'
         ]
     }
 )
