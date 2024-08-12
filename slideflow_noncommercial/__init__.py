@@ -33,3 +33,8 @@ def register_extras():
     # Register BISCUIT
     from . import biscuit
     sys.modules['slideflow.biscuit'] = biscuit
+    
+    # Register StyleGAN
+    from . import stylegan2, stylegan3
+    sys.modules['slideflow.gan.stylegan2'] = stylegan2
+    sys.modules['slideflow.gan.stylegan3'] = stylegan3

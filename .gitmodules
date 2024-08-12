@@ -1,0 +1,6 @@
+[submodule "slideflow_noncommercial/stylegan3"]
+	path = slideflow_noncommercial/stylegan3
+	url = git@github.com:jamesdolezal/stylegan3-slideflow.git
+[submodule "slideflow_noncommercial/stylegan2"]
+	path = slideflow_noncommercial/stylegan2
+	url = git@github.com:jamesdolezal/stylegan2-slideflow.git
