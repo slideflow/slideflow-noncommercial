@@ -21,20 +21,34 @@
 
 from slideflow.model.extractors import register_torch
 
+# -----------------------------------------------------------------------------
 
 @register_torch
 def histossl(**kwargs):
     from .histossl import HistoSSLFeatures
     return HistoSSLFeatures(**kwargs)
 
-
 @register_torch
 def plip(**kwargs):
     from .plip import PLIPFeatures
     return PLIPFeatures(**kwargs)
 
-
 @register_torch
 def uni(weights, **kwargs):
     from .uni import UNIFeatures
     return UNIFeatures(weights, **kwargs)
+
+@register_torch("gigapath")
+def gigapath(**kwargs):
+    from .gigapath import GigapathFeatures
+    return GigapathFeatures(**kwargs)
+
+@register_torch("gigapath.slide")
+def gigapath(**kwargs):
+    from .gigapath import GigapathSlideFeatures
+    return GigapathSlideFeatures(**kwargs)
+
+@register_torch("gigapath.tile")
+def gigapath(**kwargs):
+    from .gigapath import GigapathTileFeatures
+    return GigapathTileFeatures(**kwargs)
