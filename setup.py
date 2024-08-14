@@ -12,7 +12,7 @@ class GigapathInstall(install):
     """Installs gigapath, applying fix to broken pyproject.toml."""
 
     def run(self):
-        if 'gigapath' in self.distribution.extras:
+        if 'gigapath' in self.distribution.extras_require:
             self.install_gigapath()
 
         install.run(self)
