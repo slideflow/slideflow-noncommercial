@@ -64,9 +64,10 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/slideflow/slideflow-noncommercial",
     packages=setuptools.find_packages(),
+    license="Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)",
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: Other/Proprietary License :: Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)",
+        "License :: Other/Proprietary License",
         "Operating System :: OS Independent",
     ],
     entry_points={
