@@ -13,6 +13,7 @@ Slideflow is designed to provide an accessible, easy-to-use interface for develo
 - Python >= 3.8
 - [Slideflow](https://github.com/jamesdolezal/slideflow) >= 3.0
 - [PyTorch](https://pytorch.org/) >= 1.12
+  - StyleGAN3 requires PyTorch <1.13
 
 ## Installation
 Slideflow-NonCommercial is easily installed via PyPI and will automatically integrate with Slideflow.
