@@ -50,13 +50,14 @@ with open("README.md", "r") as fh:
 
 # -----------------------------------------------------------------------------
 
-cmdclass = versioneer.get_cmdclass()
-cmdclass.update({'install': GigapathInstall})
+# Install gigapath package if requested
+#cmdclass = versioneer.get_cmdclass()
+#cmdclass.update({'install': GigapathInstall})
 
 setuptools.setup(
     name="slideflow-noncommercial",
     version=versioneer.get_version(),
-    cmdclass=cmdclass,
+    cmdclass=versioneer.get_cmdclass(),
     author="James Dolezal",
     author_email="james@slideflow.ai",
     description="Non-commercial extensions and tools for Slideflow.",
@@ -94,7 +95,8 @@ setuptools.setup(
             'timm>=1.0.3',
             'fairscale',
             'flash_attn==2.5.8',
-            'einops'
+            'einops',
+            'gigapath @ git+ssh://git@github.com/prov-gigapath/prov-gigapath@main#egg=gigapath'
         ]
     }
 )
