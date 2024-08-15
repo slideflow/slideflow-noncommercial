@@ -20,8 +20,6 @@
 # along with Slideflow-NonCommercial. If not, see <https://creativecommons.org/licenses/by-nc/4.0/>.
 
 import torch
-from torchvision import transforms
-from torchvision.transforms import InterpolationMode
 from typing import Union
 
 try:
@@ -73,13 +71,10 @@ class PLIPFeatures(TorchFeatureExtractor):
 }
 """
 
-    def __init__(self, device=None, center_crop=False, resize=False, interpolation=InterpolationMode.BILINEAR, **kwargs):
+    def __init__(self, device=None, **kwargs):
         super().__init__(**kwargs)
 
         from slideflow.model import torch_utils
-
-        if center_crop and resize:
-            raise ValueError("center_crop and resize cannot both be True.")
 
         self.device = torch_utils.get_device(device)
         self.model = CLIPImageFeatures("vinid/plip")
@@ -88,30 +83,8 @@ class PLIPFeatures(TorchFeatureExtractor):
 
         # ---------------------------------------------------------------------
         self.num_features = 512
-        all_transforms = []
-        if center_crop:
-            all_transforms += [
-                transforms.CenterCrop(
-                    224 if center_crop is True else center_crop
-                )
-            ]
-        if resize:
-            all_transforms += [
-                transforms.Resize(
-                    224 if resize is True else resize,
-                    interpolation=interpolation
-                )
-            ]
-        all_transforms += [
-            transforms.Lambda(lambda x: x / 255.),
-            transforms.Normalize(
-                mean=OPENAI_CLIP_MEAN,
-                std=OPENAI_CLIP_STD),
-        ]
-        self.transform = transforms.Compose(all_transforms)
+        self.transform = self.build_transform(img_size=224, norm_mean=OPENAI_CLIP_MEAN, norm_std=OPENAI_CLIP_STD)
         self.preprocess_kwargs = dict(standardize=False)
-        self._center_crop = center_crop
-        self._resize = resize
         # ---------------------------------------------------------------------
 
 
@@ -142,11 +115,6 @@ class PLIPFeatures(TorchFeatureExtractor):
         feature extractor, using ``slideflow.build_feature_extractor()``.
 
         """
-        cls_name = self.__class__.__name__
-        return {
-            'class': f'slideflow.model.extractors.plip.{cls_name}',
-            'kwargs': {
-                'center_crop': self._center_crop,
-                'resize': self._resize
-            },
-        }
+        return self._dump_config(
+            class_name='slideflow.model.extractors.plip.PLIPFeatures',
+        )

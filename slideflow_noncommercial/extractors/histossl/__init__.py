@@ -34,8 +34,6 @@ import os
 import gdown
 import slideflow as sf
 from slideflow.util import make_cache_dir_path
-from torchvision import transforms
-from torchvision.transforms import InterpolationMode
 
 from slideflow.model.extractors._factory_torch import TorchFeatureExtractor
 
@@ -75,13 +73,10 @@ you agree to the terms of the license.
 """
     MD5 = 'e7124eefc87fe6069bf4b864f9ed298c'
 
-    def __init__(self, device=None, center_crop=False, resize=False, weights=None, interpolation=InterpolationMode.BILINEAR, **kwargs):
+    def __init__(self, device=None, weights=None, **kwargs):
         super().__init__(**kwargs)
 
         from slideflow.model import torch_utils
-
-        if center_crop and resize:
-            raise ValueError("center_crop and resize cannot both be True.")
 
         self.print_license()
         if weights is None:
@@ -96,30 +91,8 @@ you agree to the terms of the license.
 
         # ---------------------------------------------------------------------
         self.num_features = 768
-        all_transforms = []
-        if center_crop:
-            all_transforms += [
-                transforms.CenterCrop(
-                    224 if center_crop is True else center_crop
-                )
-            ]
-        if resize:
-            all_transforms += [
-                transforms.Resize(
-                    224 if resize is True else resize,
-                    interpolation=interpolation
-                )
-            ]
-        all_transforms += [
-            transforms.Lambda(lambda x: x / 255.),
-            transforms.Normalize(
-                mean=(0.485, 0.456, 0.406),
-                std=(0.229, 0.224, 0.225)),
-        ]
-        self.transform = transforms.Compose(all_transforms)
+        self.transform = self.build_transform(img_size=224)
         self.preprocess_kwargs = dict(standardize=False)
-        self._center_crop = center_crop
-        self._resize = resize
         # ---------------------------------------------------------------------
 
     @staticmethod
@@ -142,11 +115,6 @@ you agree to the terms of the license.
         feature extractor, using ``slideflow.build_feature_extractor()``.
 
         """
-        cls_name = self.__class__.__name__
-        return {
-            'class': f'slideflow.model.extractors.histossl.{cls_name}',
-            'kwargs': {
-                'center_crop': self._center_crop,
-                'resize': self._resize
-            },
-        }
+        return self._dump_config(
+            class_name=f'slideflow.model.extractors.histossl.HistoSSLFeatures',
+        )

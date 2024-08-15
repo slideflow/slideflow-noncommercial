@@ -20,8 +20,6 @@
 # along with Slideflow-NonCommercial. If not, see <https://creativecommons.org/licenses/by-nc/4.0/>.
 
 import torch
-from torchvision import transforms
-from torchvision.transforms import InterpolationMode
 import timm
 
 from slideflow.model.extractors._factory_torch import TorchFeatureExtractor
@@ -64,21 +62,10 @@ class UNIFeatures(TorchFeatureExtractor):
 }
 """
 
-    def __init__(
-        self, 
-        weights: str, 
-        device: str = 'cuda', 
-        center_crop: bool = False, 
-        resize: bool = False, 
-        interpolation: InterpolationMode = InterpolationMode.BILINEAR,
-        **kwargs
-    ) -> None:
+    def __init__(self, weights: str, device: str = 'cuda', **kwargs) -> None:
         super().__init__(**kwargs)
 
         from slideflow.model import torch_utils
-
-        if center_crop and resize:
-            raise ValueError("center_crop and resize cannot both be True.")
 
         self.device = torch_utils.get_device(device)
         self.model = timm.create_model(
@@ -95,32 +82,9 @@ class UNIFeatures(TorchFeatureExtractor):
 
         # ---------------------------------------------------------------------
         self.num_features = 1024
-
-        all_transforms = []
-        if center_crop:
-            all_transforms += [
-                transforms.CenterCrop(
-                    224 if center_crop is True else center_crop
-                )
-            ]
-        if resize:
-            all_transforms += [
-                transforms.Resize(
-                    224 if resize is True else resize,
-                    interpolation=interpolation
-                )
-            ]
-        all_transforms += [
-            transforms.Lambda(lambda x: x / 255.),
-            transforms.Normalize(
-                mean=(0.485, 0.456, 0.406),
-                std=(0.229, 0.224, 0.225))
-        ]
-        self.transform = transforms.Compose(all_transforms)
+        self.transform = self.build_transform(img_size=224)
         self.preprocess_kwargs = dict(standardize=False)
-        self._center_crop = center_crop
         self._weights = weights
-        self._resize = resize
 
     def dump_config(self):
         """Return a dictionary of configuration parameters.
@@ -129,11 +93,8 @@ class UNIFeatures(TorchFeatureExtractor):
         feature extractor, using ``slideflow.build_feature_extractor()``.
 
         """
-        return {
-            'class': 'slideflow.model.extractors.uni.UNIFeatures',
-            'kwargs': {
-                'center_crop': self._center_crop,
-                'resize': self._resize,
-                'weights': self._weights
-            }
-        }
+        return self._dump_config(
+            class_name='slideflow.model.extractors.uni.UNIFeatures',
+            weights=self._weights
+        )
+        
