@@ -21,6 +21,7 @@
 
 import torch
 from torchvision import transforms
+from torchvision.transforms import InterpolationMode
 from typing import Union
 
 try:
@@ -72,7 +73,7 @@ class PLIPFeatures(TorchFeatureExtractor):
 }
 """
 
-    def __init__(self, device=None, center_crop=False, resize=False, **kwargs):
+    def __init__(self, device=None, center_crop=False, resize=False, interpolation=InterpolationMode.BILINEAR, **kwargs):
         super().__init__(**kwargs)
 
         from slideflow.model import torch_utils
@@ -87,12 +88,20 @@ class PLIPFeatures(TorchFeatureExtractor):
 
         # ---------------------------------------------------------------------
         self.num_features = 512
+        all_transforms = []
         if center_crop:
-            all_transforms = [transforms.CenterCrop(224)]
-        elif resize:
-            all_transforms = [transforms.Resize(224)]
-        else:
-            all_transforms = []
+            all_transforms += [
+                transforms.CenterCrop(
+                    224 if center_crop is True else center_crop
+                )
+            ]
+        if resize:
+            all_transforms += [
+                transforms.Resize(
+                    224 if resize is True else resize,
+                    interpolation=interpolation
+                )
+            ]
         all_transforms += [
             transforms.Lambda(lambda x: x / 255.),
             transforms.Normalize(

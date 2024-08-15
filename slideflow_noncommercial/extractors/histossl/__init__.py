@@ -35,6 +35,7 @@ import gdown
 import slideflow as sf
 from slideflow.util import make_cache_dir_path
 from torchvision import transforms
+from torchvision.transforms import InterpolationMode
 
 from slideflow.model.extractors._factory_torch import TorchFeatureExtractor
 
@@ -74,7 +75,7 @@ you agree to the terms of the license.
 """
     MD5 = 'e7124eefc87fe6069bf4b864f9ed298c'
 
-    def __init__(self, device=None, center_crop=False, resize=False, weights=None, **kwargs):
+    def __init__(self, device=None, center_crop=False, resize=False, weights=None, interpolation=InterpolationMode.BILINEAR, **kwargs):
         super().__init__(**kwargs)
 
         from slideflow.model import torch_utils
@@ -95,12 +96,20 @@ you agree to the terms of the license.
 
         # ---------------------------------------------------------------------
         self.num_features = 768
+        all_transforms = []
         if center_crop:
-            all_transforms = [transforms.CenterCrop(224)]
-        elif resize:
-            all_transforms = [transforms.Resize(224)]
-        else:
-            all_transforms = []
+            all_transforms += [
+                transforms.CenterCrop(
+                    224 if center_crop is True else center_crop
+                )
+            ]
+        if resize:
+            all_transforms += [
+                transforms.Resize(
+                    224 if resize is True else resize,
+                    interpolation=interpolation
+                )
+            ]
         all_transforms += [
             transforms.Lambda(lambda x: x / 255.),
             transforms.Normalize(

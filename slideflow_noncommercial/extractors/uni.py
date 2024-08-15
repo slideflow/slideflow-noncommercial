@@ -21,6 +21,7 @@
 
 import torch
 from torchvision import transforms
+from torchvision.transforms import InterpolationMode
 import timm
 
 from slideflow.model.extractors._factory_torch import TorchFeatureExtractor
@@ -63,7 +64,15 @@ class UNIFeatures(TorchFeatureExtractor):
 }
 """
 
-    def __init__(self, weights, device='cuda', center_crop=False, resize=False, **kwargs):
+    def __init__(
+        self, 
+        weights: str, 
+        device: str = 'cuda', 
+        center_crop: bool = False, 
+        resize: bool = False, 
+        interpolation: InterpolationMode = InterpolationMode.BILINEAR,
+        **kwargs
+    ) -> None:
         super().__init__(**kwargs)
 
         from slideflow.model import torch_utils
@@ -86,12 +95,21 @@ class UNIFeatures(TorchFeatureExtractor):
 
         # ---------------------------------------------------------------------
         self.num_features = 1024
+
+        all_transforms = []
         if center_crop:
-            all_transforms = [transforms.CenterCrop(224)]
-        elif resize:
-            all_transforms = [transforms.Resize(224)]
-        else:
-            all_transforms = []
+            all_transforms += [
+                transforms.CenterCrop(
+                    224 if center_crop is True else center_crop
+                )
+            ]
+        if resize:
+            all_transforms += [
+                transforms.Resize(
+                    224 if resize is True else resize,
+                    interpolation=interpolation
+                )
+            ]
         all_transforms += [
             transforms.Lambda(lambda x: x / 255.),
             transforms.Normalize(
