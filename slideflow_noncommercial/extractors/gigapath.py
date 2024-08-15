@@ -74,7 +74,7 @@ class GigapathTileFeatures(TorchFeatureExtractor):
 }
 """
 
-    def __init__(self, weights=None, device='cuda', resize=256, center_crop=224, **kwargs):
+    def __init__(self, weights=None, device='cuda', **kwargs):
         super().__init__(**kwargs)
 
         from slideflow.model import torch_utils
@@ -92,15 +92,32 @@ class GigapathTileFeatures(TorchFeatureExtractor):
 
         # ---------------------------------------------------------------------
         self.num_features = 1536
+        self.transform = self.build_transform()
+        self.preprocess_kwargs = dict(standardize=False)
+        self._weights = weights
+
+    def get_transforms(
+        self,
+        *,
+        center_crop: Optional[int] = None,
+        resize: Optional[int] = None,
+        norm_mean: Optional[Tuple[float, float, float]] = (0.485, 0.456, 0.406),
+        norm_std: Optional[Tuple[float, float, float]] = (0.229, 0.224, 0.225),
+        interpolation: str = 'bicubic',
+        antialias: bool = False
+    ):
+        """Get a list of preprocessing image transforms."""
+        from torchvision import transforms
+
         # This preprocessing, with resizing to 256 followed by
         # center crop to 224, is the same as the original Gigapath
-        all_transforms = []
-
         if resize:
             all_transforms += [
                 transforms.Resize(
                     256 if resize is True else resize,
-                    interpolation=transforms.InterpolationMode.BICUBIC),
+                    interpolation=self._get_interpolation(interpolation),
+                    antialias=antialias
+                )
             ]
         if center_crop:
             all_transforms += [
@@ -110,14 +127,10 @@ class GigapathTileFeatures(TorchFeatureExtractor):
         all_transforms += [
             transforms.Lambda(lambda x: x / 255.),
             transforms.Normalize(
-                mean=(0.485, 0.456, 0.406),
-                std=(0.229, 0.224, 0.225))
+                mean=norm_mean,
+                std=norm_std)
         ]
-        self.transform = transforms.Compose(all_transforms)
-        self.preprocess_kwargs = dict(standardize=False)
-        self._weights = weights
-        self._resize = resize
-        self._center_crop = center_crop
+        return all_transforms
 
     def dump_config(self):
         """Return a dictionary of configuration parameters.
@@ -126,14 +139,11 @@ class GigapathTileFeatures(TorchFeatureExtractor):
         feature extractor, using ``slideflow.build_feature_extractor()``.
 
         """
-        return {
-            'class': 'slideflow.model.extractors.gigapath.GigapathTileFeatures',
-            'kwargs': {
-                'weights': self._weights,
-                'resize': self._resize,
-                'center_crop': self._center_crop,
-            }
-        }
+        return self._dump_config(
+            class_name='slideflow.model.extractors.gigapath.GigapathTileFeatures',
+            weights=self._weights
+        )
+    
 
 # -----------------------------------------------------------------------------
 
