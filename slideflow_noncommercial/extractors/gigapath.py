@@ -119,8 +119,8 @@ class GigapathTileFeatures(TorchFeatureExtractor):
     def get_transforms(
         self,
         *,
-        center_crop: Optional[int] = None,
-        resize: Optional[int] = None,
+        center_crop: Optional[int] = 224,
+        resize: Optional[int] = 256,
         norm_mean: Optional[Tuple[float, float, float]] = (0.485, 0.456, 0.406),
         norm_std: Optional[Tuple[float, float, float]] = (0.229, 0.224, 0.225),
         interpolation: str = 'bicubic',
@@ -131,6 +131,7 @@ class GigapathTileFeatures(TorchFeatureExtractor):
 
         # This preprocessing, with resizing to 256 followed by
         # center crop to 224, is the same as the original Gigapath
+        all_transforms = []
         if resize:
             all_transforms += [
                 transforms.Resize(

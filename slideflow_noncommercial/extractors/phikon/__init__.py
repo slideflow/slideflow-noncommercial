@@ -42,19 +42,19 @@ from .ibotvit import iBOTViT
 
 # -----------------------------------------------------------------------------
 
-class HistoSSLFeatures(TorchFeatureExtractor):
+class PhikonFeatures(TorchFeatureExtractor):
     """
-    HistoSSL pretrained feature extractor.
+    Phikon pretrained feature extractor.
     Feature dimensions: 768
     GitHub: https://github.com/owkin/HistoSSLscaling
     """
 
-    tag = 'histossl'
+    tag = 'phikon'
     url = 'https://drive.google.com/uc?id=1uxsoNVhQFoIDxb4RYIiOtk044s6TTQXY'
     license = """
 This model is developed and licensed by Owkin, Inc. The license for use is
 provided in the LICENSE file in the same directory as this source file
-(slideflow/model/extractors/histossl/LICENSE), and is also available
+(slideflow/model/extractors/phikon/LICENSE), and is also available
 at https://github.com/owkin/HistoSSLscaling. By using this feature extractor,
 you agree to the terms of the license.
 """
@@ -84,7 +84,7 @@ you agree to the terms of the license.
         self.device = torch_utils.get_device(device)
         self.model = iBOTViT(
             architecture='vit_base_pancan',
-            encoder='student',
+            encoder='teacher',
             weights_path=weights
         )
         self.model.to(self.device)
@@ -98,11 +98,11 @@ you agree to the terms of the license.
     @staticmethod
     def download():
         """Download the pretrained model."""
-        dest = make_cache_dir_path('histossl')
+        dest = make_cache_dir_path('phikon')
         dest = os.path.join(dest, 'ibot_vit_base_pancan.pth')
         if not os.path.exists(dest):
-            gdown.download(HistoSSLFeatures.url, dest, quiet=False)
-        if sf.util.md5(dest) != HistoSSLFeatures.MD5:
+            gdown.download(PhikonFeatures.url, dest, quiet=False)
+        if sf.util.md5(dest) != PhikonFeatures.MD5:
             raise sf.errors.ChecksumError(
                 f"Downloaded weights at {dest} failed MD5 checksum."
             )
@@ -116,5 +116,5 @@ you agree to the terms of the license.
 
         """
         return self._dump_config(
-            class_name=f'slideflow.model.extractors.histossl.HistoSSLFeatures',
+            class_name=f'slideflow.model.extractors.phikon.PhikonFeatures',
         )

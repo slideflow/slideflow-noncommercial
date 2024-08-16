@@ -19,14 +19,20 @@
 # You should have received a copy of the Creative Commons Attribution-NonCommercial 4.0 International License
 # along with Slideflow-NonCommercial. If not, see <https://creativecommons.org/licenses/by-nc/4.0/>.
 
+from slideflow import log
 from slideflow.model.extractors import register_torch
 
 # -----------------------------------------------------------------------------
 
 @register_torch
+def phikon(**kwargs):
+    from .phikon import PhikonFeatures
+    return PhikonFeatures(**kwargs)
+
+@register_torch
 def histossl(**kwargs):
-    from .histossl import HistoSSLFeatures
-    return HistoSSLFeatures(**kwargs)
+    log.warning("'histossl' has been renamed to 'phikon', in accordance with the author's naming.")
+    return phikon(**kwargs)
 
 @register_torch
 def plip(**kwargs):

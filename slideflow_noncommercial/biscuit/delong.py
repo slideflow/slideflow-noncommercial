@@ -42,19 +42,6 @@ def fastDeLong(predictions_sorted_transposed, label_1_count):
     Returns:
         (AUC value, DeLong covariance)
 
-    Reference:
-        @article{sun2014fast,
-        title={Fast Implementation of DeLong's Algorithm for
-                Comparing the Areas Under Correlated Receiver Operating Characteristic Curves},
-        author={Xu Sun and Weichao Xu},
-        journal={IEEE Signal Processing Letters},
-        volume={21},
-        number={11},
-        pages={1389--1393},
-        year={2014},
-        publisher={IEEE}
-        }
-
     """
     # Short variables are named as they are in the paper
     m = label_1_count
