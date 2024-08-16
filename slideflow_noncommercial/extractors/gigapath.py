@@ -38,15 +38,35 @@ if TYPE_CHECKING:
 # -----------------------------------------------------------------------------
 
 def _verify_gigapath_imports():
+    """Verify that the gigapath package and its dependencies are installed."""
     try:
         from gigapath import slide_encoder
         from gigapath.torchscale.component.flash_attention import flash_attn_func
     except ImportError:
         raise ImportError("Please install the gigapath package to use this feature extractor.")
     if flash_attn_func is None:
+        msg = "Error initializing flash attention module"
+        if not torch.cuda.is_available():
+            raise ImportError(f"{msg}: CUDA not available.")
+        if torch.cuda.get_device_capability()[0] <= 7.0:
+            sf.log.info("CUDA device capability <= 7.0 detected. Attempting to build flash attention with xformers.")
+            try:
+                from xformers.ops.fmha import Context
+            except ImportError:
+                raise ImportError(f"{msg}: 'xformers' package is required for CUDA device capability < 7.0, "
+                                  "but could not be imported. Please install xformers ('pip install xformers').")
+        else:
+            sf.log.info("CUDA device capability > 7.0 detected. Attempting to build flash attention with flash_attn.")
+            try:
+                from flash_attn.flash_attn_interface import flash_attn_func as _flash_attn_func
+            except ImportError:
+                raise ImportError(f"{msg}: 'flash_attn' package is required for CUDA device capability > 7.0, "
+                                  "but could not be imported. Please install flash_attn ('pip install flash_attn').")
         raise ImportError("Unable to verify status of flash attention module. "
                           "Please ensure flash_attn is installed ('pip install flash_attn'), "
                           "or xformers ('pip install xformers') if your CUDA device capability is < 7.0")
+    return True
+
 
 # -----------------------------------------------------------------------------
 
