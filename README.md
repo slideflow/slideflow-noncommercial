@@ -30,7 +30,7 @@ pip install slideflow-noncommercial[gigapath]
 ```
 
 ## Features
-- **HistoSSL**, a pretrained foundation model ([GitHub](https://github.com/owkin/HistoSSLscaling) | [Paper](https://www.medrxiv.org/content/10.1101/2023.07.21.23292757v2.full.pdf))
+- **Phikon** (previously "histossl"), a pretrained foundation model ([GitHub](https://github.com/owkin/HistoSSLscaling) | [Paper](https://www.medrxiv.org/content/10.1101/2023.07.21.23292757v2.full.pdf))
 - **PLIP**, a pretrained foundation model ([GitHub](https://github.com/PathologyFoundation/plip) | [Paper](https://www.nature.com/articles/s41591-023-02504-3))
 - **GigaPath**, a pretrained whole-slide foundation model ([GitHub](https://github.com/prov-gigapath/prov-gigapath) | [Paper](https://aka.ms/gigapath))
 - **UNI**, a pretrained foundation model ([GitHub](https://github.com/mahmoodlab/UNI) | [Paper](https://www.nature.com/articles/s41591-024-02857-3))
