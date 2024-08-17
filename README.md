@@ -23,10 +23,10 @@ Slideflow-NonCommercial is easily installed via PyPI and will automatically inte
 pip install slideflow-noncommercial
 ```
 
-The GigaPath foundation model has extra requirements, which can be installed by adding `[gigapath]`:
+The GigaPath foundation model has extra requirements, which can be installed with the following:
 
 ```
-pip install slideflow-noncommercial[gigapath]
+pip install slideflow-noncommercial[gigapath] git+ssh://git@github.com/prov-gigapath/prov-gigapath
 ```
 
 ## Features
