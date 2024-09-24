@@ -23,6 +23,7 @@ import timm
 import torch
 from packaging import version
 from timm.layers import SwiGLUPacked
+from slideflow import log
 
 from slideflow.model.extractors._factory_torch import TorchFeatureExtractor
 
@@ -64,7 +65,7 @@ class Virchow2Features(TorchFeatureExtractor):
         from slideflow.model import torch_utils
 
         if version.parse(timm.__version__) < version.parse('1.0.0'):
-            sf.log.warning("Virchow2 requires timm version 1.0.0 or later. Please update timm with `pip install --upgrade timm`")
+            log.warning("Virchow2 requires timm version 1.0.0 or later. Please update timm with `pip install --upgrade timm`")
 
         self.device = torch_utils.get_device(device)
         self.model = timm.create_model(
