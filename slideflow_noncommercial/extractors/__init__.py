@@ -58,3 +58,8 @@ def gigapath(**kwargs):
 def gigapath(**kwargs):
     from .gigapath import GigapathTileFeatures
     return GigapathTileFeatures(**kwargs)
+
+@register_torch
+def virchow2(weights, **kwargs):
+    from .virchow2 import Virchow2Features
+    return Virchow2Features(weights, **kwargs)
