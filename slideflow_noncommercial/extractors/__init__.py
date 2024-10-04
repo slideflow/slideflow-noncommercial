@@ -63,3 +63,8 @@ def gigapath(**kwargs):
 def virchow2(weights, **kwargs):
     from .virchow2 import Virchow2Features
     return Virchow2Features(weights, **kwargs)
+
+@register_torch
+def virchow(weights, **kwargs):
+    from .virchow import VirchowFeatures
+    return VirchowFeatures(weights, **kwargs)
