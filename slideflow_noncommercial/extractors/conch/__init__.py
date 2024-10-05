@@ -123,7 +123,6 @@ class ConchFeatures(TorchFeatureExtractor):
 
         """
         return self._dump_config(
-            class_name='slideflow.model.extractors.conch.ConchFeatures',
-            weights=self._weights
+            class_name='slideflow.model.extractors.conch.ConchFeatures'
         )
     
