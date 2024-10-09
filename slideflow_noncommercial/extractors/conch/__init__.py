@@ -23,13 +23,14 @@
 from slideflow.model.extractors._factory_torch import TorchFeatureExtractor
 from .coca_model import CoCa
 import torch
+from slideflow import errors
 
 
 # -----------------------------------------------------------------------------
 
 class CoCaImageFeatures(torch.nn.Module):
 
-    def __init__(self, weights=None, device='cuda'):
+    def __init__(self, weights=None, device='cuda', embedding_space='image'):
         super().__init__()
 
         _model_cfg = {'embed_dim': 512,
@@ -61,9 +62,16 @@ class CoCaImageFeatures(torch.nn.Module):
             td = torch.load(weights, map_location=device)
             self._model.load_state_dict(td, strict=False)
 
+        self.embedding_space = embedding_space
+
     def forward(self, image_batch):
         with torch.inference_mode():
-            image_embs  = self._model.encode_image(image_batch, proj_contrast=False, normalize=False)
+            if self.embedding_space=='image':
+                image_embs  = self._model.encode_image(image_batch, proj_contrast=False, normalize=False)
+            elif self.embedding_space=='text':
+                image_embs  = self._model.encode_image(image_batch, proj_contrast=True, normalize=True)
+            else:
+                raise errors.InvalidFeatureExtractor(f"Unrecognized CONCH embedding space: {self.embedding_space}")
             return image_embs
 
 
@@ -99,13 +107,13 @@ class ConchFeatures(TorchFeatureExtractor):
 }
 """
 
-    def __init__(self, weights=None, device='cuda', **kwargs):
+    def __init__(self, weights=None, device='cuda', embedding_space='image', **kwargs):
         super().__init__(**kwargs)
 
         from slideflow.model import torch_utils
 
         self.device = torch_utils.get_device(device)
-        self.model = CoCaImageFeatures(weights=weights, device=self.device)
+        self.model = CoCaImageFeatures(weights=weights, device=self.device, embedding_space=embedding_space)
         self.model.to(self.device)
         self.model.eval()
 
