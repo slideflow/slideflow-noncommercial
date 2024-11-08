@@ -24,6 +24,7 @@ import torch
 from packaging import version
 from timm.layers import SwiGLUPacked
 from slideflow import log
+from typing import Optional
 
 from slideflow.model.extractors._factory_torch import TorchFeatureExtractor
 
@@ -33,7 +34,7 @@ class Virchow2Features(TorchFeatureExtractor):
     """Virchow2 pretrained feature extractor.
     The feature extractor is a Vision Transformer (ViT) model pretrained on a
     3.1M whole-slide dataset of histopathology images, trained on different magnifications
-    (5x, 10x, 20x, 40x). Virchow2 is built and distributed by Paige, and is available on 
+    (5x, 10x, 20x, 40x). Virchow2 is built and distributed by Paige, and is available on
     Hugging Face at hf-hub:paige-ai/Virchow2.
     The transformer outputs both a class token (size: 1280) and 5 patch token (256 x 1280),
     wherein the tokens 1-4 are register tokens, so they are ignored.
@@ -41,7 +42,7 @@ class Virchow2Features(TorchFeatureExtractor):
     of the class token and an average pool of the 5th patch token, resulting in a final
     vector size of 2560.
     Feature dimensions: 2560
-    Manuscript: Zimmermann, E., et al. (2024). Scaling Self-Supervised Mixed Magnification 
+    Manuscript: Zimmermann, E., et al. (2024). Scaling Self-Supervised Mixed Magnification
     Models in Pathology. arXiv preprint arXiv:2408.00738 (2024).
     Hugging Face: https://huggingface.co/paige-ai/Virchow2
     """
@@ -50,7 +51,7 @@ class Virchow2Features(TorchFeatureExtractor):
     license = """CC-BY-NC-ND 4.0 (non-commercial use only). Please see the original license at https://huggingface.co/paige-ai/Virchow2."""
     citation = """
 @misc{zimmermann2024virchow2,
-      title={Virchow2: Scaling Self-Supervised Mixed Magnification Models in Pathology}, 
+      title={Virchow2: Scaling Self-Supervised Mixed Magnification Models in Pathology},
       author={Eric Zimmermann and Eugene Vorontsov and Julian Viret and Adam Casson and Michal Zelechowski and George Shaikovski and Neil Tenenholtz and James Hall and Thomas Fuchs and Nicolo Fusi and Siqi Liu and Kristen Severson},
       year={2024},
       eprint={2408.00738},
@@ -59,7 +60,7 @@ class Virchow2Features(TorchFeatureExtractor):
 }
 """
 
-    def __init__(self, weights: str, device: str = 'cuda', **kwargs) -> None:
+    def __init__(self, weights: str, device: Optional[str] = None, **kwargs) -> None:
         super().__init__(**kwargs)
 
         from slideflow.model import torch_utils

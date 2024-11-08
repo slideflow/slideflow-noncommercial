@@ -22,6 +22,7 @@
 import torch
 import timm
 
+from typing import Optional
 from slideflow.model.extractors._factory_torch import TorchFeatureExtractor
 
 # -----------------------------------------------------------------------------
@@ -62,7 +63,7 @@ class UNIFeatures(TorchFeatureExtractor):
 }
 """
 
-    def __init__(self, weights: str, device: str = 'cuda', **kwargs) -> None:
+    def __init__(self, weights: str, device: Optional[str] = None, **kwargs) -> None:
         super().__init__(**kwargs)
 
         from slideflow.model import torch_utils
@@ -97,4 +98,4 @@ class UNIFeatures(TorchFeatureExtractor):
             class_name='slideflow.model.extractors.uni.UNIFeatures',
             weights=self._weights
         )
-        
+

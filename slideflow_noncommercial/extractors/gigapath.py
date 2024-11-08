@@ -94,14 +94,14 @@ class GigapathTileFeatures(TorchFeatureExtractor):
 }
 """
 
-    def __init__(self, weights=None, device='cuda', **kwargs):
+    def __init__(self, weights=None, device=None, **kwargs):
         super().__init__(**kwargs)
 
         from slideflow.model import torch_utils
 
         self.device = torch_utils.get_device(device)
         self.model = timm.create_model(
-            "hf_hub:prov-gigapath/prov-gigapath", 
+            "hf_hub:prov-gigapath/prov-gigapath",
             pretrained=(weights is None)
         )
         if weights is not None:
@@ -127,7 +127,6 @@ class GigapathTileFeatures(TorchFeatureExtractor):
         antialias: bool = False
     ):
         """Get a list of preprocessing image transforms."""
-        from torchvision import transforms
 
         # This preprocessing, with resizing to 256 followed by
         # center crop to 224, is the same as the original Gigapath
@@ -164,7 +163,7 @@ class GigapathTileFeatures(TorchFeatureExtractor):
             class_name='slideflow.model.extractors.gigapath.GigapathTileFeatures',
             weights=self._weights
         )
-    
+
 
 # -----------------------------------------------------------------------------
 
@@ -183,7 +182,7 @@ class GigapathSlideFeatures:
         weights: Optional[str] = None,
         *,
         global_pool: bool = False,
-        device: str = 'cuda',
+        device: Optional[str] = None,
     ):
         """Initialize the Gigapath slide feature generator."""
 
@@ -373,7 +372,7 @@ class GigapathFeatures:
         slide_encoder_weights: Optional[str] = None,
         *,
         global_pool: bool = False,
-        device: str = 'cuda',
+        device: Optional[str] = None,
         **kwargs
     ):
         """Initialize the Gigapath slide feature generator.
