@@ -31,9 +31,15 @@ pip install slideflow-noncommercial[gigapath] git+ssh://git@github.com/prov-giga
 
 ## Features
 - **Phikon** (previously "histossl"), a pretrained foundation model ([GitHub](https://github.com/owkin/HistoSSLscaling) | [Paper](https://www.medrxiv.org/content/10.1101/2023.07.21.23292757v2.full.pdf))
+- **Phikon-V2**, a pretrained foundation model ([Hugging Face](https://huggingface.co/owkin/phikon-v2) | [Paper](https://arxiv.org/abs/2409.09173))
 - **PLIP**, a pretrained foundation model ([GitHub](https://github.com/PathologyFoundation/plip) | [Paper](https://www.nature.com/articles/s41591-023-02504-3))
 - **GigaPath**, a pretrained whole-slide foundation model ([GitHub](https://github.com/prov-gigapath/prov-gigapath) | [Paper](https://aka.ms/gigapath))
 - **UNI**, a pretrained foundation model ([GitHub](https://github.com/mahmoodlab/UNI) | [Paper](https://www.nature.com/articles/s41591-024-02857-3))
+- **UNI2**, a pretrained foundation model ([GitHub](https://github.com/mahmoodlab/UNI))
+- **H-Optimus-0**, a pretrained foundation model ([GitHub](https://github.com/bioptimus/releases/tree/main/models/h-optimus/v0))
+- **Kaiko**, a pretrained foundation model ([GitHub](https://github.com/kaiko-ai/towards_large_pathology_fms) | [Paper](https://arxiv.org/abs/2404.15217))
+- **Hibou-B & Hibou-L**, a pretrained foundation model ([GitHub](https://github.com/HistAI/hibou) | [Paper](https://arxiv.org/abs/2406.05074))
+- **DinoBloom**, a pretrained foundation model ([GitHub](https://github.com/marrlab/DinoBloom) | [Paper](https://arxiv.org/abs/2404.05022))
 - **BISCUIT**, an uncertainty quantification and thresholding algorithm ([GitHub](https://github.com/slideflow/biscuit) | [Paper](https://www.nature.com/articles/s41467-022-34025-x))
 - **StyleGAN3**, a generative adversarial network (GAN) used for both image synthesis and [model explainability](https://www.nature.com/articles/s41698-023-00399-4) ([GitHub](https://github.com/NVlabs/stylegan3) | [Paper](https://nvlabs-fi-cdn.nvidia.com/stylegan3/stylegan3-paper.pdf))
 
