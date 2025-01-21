@@ -36,6 +36,7 @@ pip install slideflow-noncommercial[gigapath] git+ssh://git@github.com/prov-giga
 - **GigaPath**, a pretrained whole-slide foundation model ([GitHub](https://github.com/prov-gigapath/prov-gigapath) | [Paper](https://aka.ms/gigapath))
 - **UNI**, a pretrained foundation model ([GitHub](https://github.com/mahmoodlab/UNI) | [Paper](https://www.nature.com/articles/s41591-024-02857-3))
 - **UNI2**, a pretrained foundation model ([GitHub](https://github.com/mahmoodlab/UNI))
+- **CONCH**, a pretrained foundation model ([GitHub](https://github.com/mahmoodlab/CONCH) | [Paper](https://www.nature.com/articles/s41591-024-02856-4))
 - **H-Optimus-0**, a pretrained foundation model ([GitHub](https://github.com/bioptimus/releases/tree/main/models/h-optimus/v0))
 - **Kaiko**, a pretrained foundation model ([GitHub](https://github.com/kaiko-ai/towards_large_pathology_fms) | [Paper](https://arxiv.org/abs/2404.15217))
 - **Hibou-B & Hibou-L**, a pretrained foundation model ([GitHub](https://github.com/HistAI/hibou) | [Paper](https://arxiv.org/abs/2406.05074))
