@@ -103,3 +103,8 @@ def hiboul(**kwargs):
 def kaiko(**kwargs):
     from .kaiko import KaikoFeatures
     return KaikoFeatures(**kwargs)
+
+@register_torch
+def musk(**kwargs):
+    from .musk import MUSKFeatures
+    return MUSKFeatures(**kwargs)

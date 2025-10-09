@@ -41,6 +41,7 @@ pip install slideflow-noncommercial[gigapath] git+ssh://git@github.com/prov-giga
 - **Kaiko**, a pretrained foundation model ([GitHub](https://github.com/kaiko-ai/towards_large_pathology_fms) | [Paper](https://arxiv.org/abs/2404.15217))
 - **Hibou-B & Hibou-L**, a pretrained foundation model ([GitHub](https://github.com/HistAI/hibou) | [Paper](https://arxiv.org/abs/2406.05074))
 - **DinoBloom**, a pretrained foundation model ([GitHub](https://github.com/marrlab/DinoBloom) | [Paper](https://arxiv.org/abs/2404.05022))
+- **MUSK**, a pretrained foundation model ([GitHub](https://github.com/lilab-stanford/MUSK.git) | [Paper](https://www.nature.com/articles/s41586-024-08378-w))
 - **BISCUIT**, an uncertainty quantification and thresholding algorithm ([GitHub](https://github.com/slideflow/biscuit) | [Paper](https://www.nature.com/articles/s41467-022-34025-x))
 - **StyleGAN3**, a generative adversarial network (GAN) used for both image synthesis and [model explainability](https://www.nature.com/articles/s41698-023-00399-4) ([GitHub](https://github.com/NVlabs/stylegan3) | [Paper](https://nvlabs-fi-cdn.nvidia.com/stylegan3/stylegan3-paper.pdf))
 
