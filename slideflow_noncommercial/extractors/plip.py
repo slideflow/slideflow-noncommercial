@@ -59,6 +59,7 @@ class PLIPFeatures(TorchFeatureExtractor):
     """
 
     tag = 'plip'
+    weights_hash = '9b49618a2d334566f4c3d245d2692822e4e98295'
     license = "No license provided by the authors."
     citation = """
 @article{huang2023visual,

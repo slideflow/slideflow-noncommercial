@@ -83,6 +83,7 @@ class GigapathTileFeatures(TorchFeatureExtractor):
 
     """
     tag = 'gigapath.tile'
+    weights_hash = 'c2fea56e6655af696b8f39f9612b86a9aaf58404'
     license = """License available at https://github.com/prov-gigapath/prov-gigapath"""
     citation = """
 @article{xu2024gigapath,

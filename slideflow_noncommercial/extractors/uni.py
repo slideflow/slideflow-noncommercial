@@ -45,6 +45,7 @@ class UNIFeatures(TorchFeatureExtractor):
     """
 
     tag = 'uni'
+    weights_hash = '6dec45a227a4af898bad99bbd157547274d84c5c'
     license = """Non-commercial use only. Please refer to the original authors."""
     citation = """
 ﻿@Article{Chen2024,
