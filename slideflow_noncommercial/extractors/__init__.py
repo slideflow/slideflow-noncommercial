@@ -44,6 +44,11 @@ def uni(weights, **kwargs):
     from .uni import UNIFeatures
     return UNIFeatures(weights, **kwargs)
 
+@register_torch
+def uni2(weights, **kwargs):
+    from .uni2 import UNI2Features
+    return UNI2Features(weights, **kwargs)
+
 @register_torch("gigapath")
 def gigapath(**kwargs):
     from .gigapath import GigapathFeatures
@@ -63,3 +68,43 @@ def gigapath(**kwargs):
 def virchow2(weights, **kwargs):
     from .virchow2 import Virchow2Features
     return Virchow2Features(weights, **kwargs)
+
+@register_torch
+def hoptimus0(**kwargs):
+    from .hoptimus0 import Hoptimus0Features
+    return Hoptimus0Features(**kwargs)
+
+@register_torch
+def dinobloom(**kwargs):
+    from .dinobloom import DinoBloomFeatures
+    return DinoBloomFeatures(**kwargs)
+
+@register_torch
+def conch(weights, **kwargs):
+    from .conch import ConchFeatures
+    return ConchFeatures(weights, **kwargs)
+
+@register_torch
+def phikonv2(**kwargs):
+    from .phikonv2 import PhikonV2Features
+    return PhikonV2Features(**kwargs)
+
+@register_torch
+def hiboub(**kwargs):
+    from .hiboub import HibouBFeatures
+    return HibouBFeatures(**kwargs)
+
+@register_torch
+def hiboul(**kwargs):
+    from .hiboul import HibouLFeatures
+    return HibouLFeatures(**kwargs)
+
+@register_torch
+def kaiko(**kwargs):
+    from .kaiko import KaikoFeatures
+    return KaikoFeatures(**kwargs)
+
+@register_torch
+def musk(**kwargs):
+    from .musk import MUSKFeatures
+    return MUSKFeatures(**kwargs)
