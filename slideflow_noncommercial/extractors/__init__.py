@@ -75,6 +75,11 @@ def hoptimus0(**kwargs):
     return Hoptimus0Features(**kwargs)
 
 @register_torch
+def hoptimus1(**kwargs):
+    from .hoptimus1 import Hoptimus1Features
+    return Hoptimus1Features(**kwargs)
+
+@register_torch
 def dinobloom(**kwargs):
     from .dinobloom import DinoBloomFeatures
     return DinoBloomFeatures(**kwargs)
