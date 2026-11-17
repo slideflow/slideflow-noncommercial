@@ -65,10 +65,9 @@ def gigapath(**kwargs):
     return GigapathTileFeatures(**kwargs)
 
 @register_torch
-def virchow2(weights, **kwargs):
+def virchow2(**kwargs):
     from .virchow2 import Virchow2Features
     return Virchow2Features(weights, **kwargs)
-
 @register_torch
 def hoptimus0(**kwargs):
     from .hoptimus0 import Hoptimus0Features
@@ -113,3 +112,8 @@ def kaiko(**kwargs):
 def musk(**kwargs):
     from .musk import MUSKFeatures
     return MUSKFeatures(**kwargs)
+
+@register_torch
+def h0_mini(weights, **kwargs):
+    from .h0_mini import H0MiniFeatures
+    return H0MiniFeatures(weights, **kwargs)

@@ -20,7 +20,7 @@
 # along with Slideflow-NonCommercial. If not, see <https://creativecommons.org/licenses/by-nc/4.0/>.
 
 # This file incorporates work from HistoSSLscaling, which is licensed
-# under a  non-commercial license. The original license and source code 
+# under a  non-commercial license. The original license and source code
 # can be found at https://github.com/owkin/HistoSSLscaling.
 
 
@@ -51,6 +51,7 @@ class PhikonFeatures(TorchFeatureExtractor):
 
     tag = 'phikon'
     url = 'https://drive.google.com/uc?id=1uxsoNVhQFoIDxb4RYIiOtk044s6TTQXY'
+    weights_hash = '6ad9fde8455b2a883d2ef4490c3052d31f120788'
     license = """
 This model is developed and licensed by Owkin, Inc. The license for use is
 provided in the LICENSE file in the same directory as this source file
